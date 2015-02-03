@@ -67,10 +67,14 @@ INSERT INTO
 VALUES
   ("Great question!",
     (SELECT id FROM questions WHERE id = 1),
-    (NULL), (SELECT id FROM users WHERE id = 2)),
+    (NULL), (SELECT id FROM users WHERE id = 2));
+
+INSERT INTO
+  replies (body, question_id, parent_id, user_id)
+VALUES  
   ("Nobody knows!",
     (SELECT id FROM questions WHERE id = 1),
-    (SELECT id FROM replies WHERE id = 1),
+    (SELECT id FROM replies AS parent WHERE parent.id = 1),
     (SELECT id FROM users WHERE id = 1));
 
 INSERT INTO
