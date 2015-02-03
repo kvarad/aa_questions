@@ -24,7 +24,7 @@ CREATE TABLE replies(
   id INTEGER PRIMARY KEY,
   body VARCHAR(500) NOT NULL,
   question_id INTEGER NOT NULL,
-  parent_id INTEGER NOT NULL,
+  parent_id INTEGER,
   user_id INTEGER NOT NULL,
   FOREIGN KEY (question_id) REFERENCES questions(id),
   FOREIGN KEY (parent_id) REFERENCES replies(id),
@@ -53,3 +53,28 @@ VALUES
     (SELECT id FROM users WHERE f_name = 'Jake' AND l_name = 'Shorty')),
   ('Recursion Help', 'I cannot get Fibonacci to work!?',
     (SELECT id FROM users WHERE f_name = 'Karthik' AND l_name = 'Raj'));
+
+INSERT INTO
+  question_followers (question_id, user_id)
+VALUES
+  ((SELECT id FROM questions WHERE id = 1),
+    (SELECT id FROM users WHERE id = 2)),
+  ((SELECT id FROM questions WHERE id = 2),
+    (SELECT id FROM users WHERE id = 1));
+
+INSERT INTO
+  replies (body, question_id, parent_id, user_id)
+VALUES
+  ("Great question!",
+    (SELECT id FROM questions WHERE id = 1),
+    (NULL), (SELECT id FROM users WHERE id = 2)),
+  ("Nobody knows!",
+    (SELECT id FROM questions WHERE id = 1),
+    (SELECT id FROM replies WHERE id = 1),
+    (SELECT id FROM users WHERE id = 1));
+
+INSERT INTO
+  question_likes (question_id, user_id)
+VALUES
+  ((SELECT id FROM questions WHERE id = 2),
+    (SELECT id FROM users WHERE id = 1));
