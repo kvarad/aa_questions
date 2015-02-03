@@ -43,7 +43,8 @@ INSERT INTO
   users (f_name, l_name)
 VALUES
   ('Jake', 'Shorty'),
-  ('Karthik', 'Raj');
+  ('Karthik', 'Raj'),
+  ('Jakrthik', 'Raorty');
 
 
 INSERT INTO
@@ -60,7 +61,9 @@ VALUES
   ((SELECT id FROM questions WHERE id = 1),
     (SELECT id FROM users WHERE id = 2)),
   ((SELECT id FROM questions WHERE id = 2),
-    (SELECT id FROM users WHERE id = 1));
+    (SELECT id FROM users WHERE id = 1)),
+  ((SELECT id FROM questions WHERE id = 2),
+    (SELECT id FROM users WHERE id = 3));
 
 INSERT INTO
   replies (body, question_id, parent_id, user_id)
@@ -71,7 +74,7 @@ VALUES
 
 INSERT INTO
   replies (body, question_id, parent_id, user_id)
-VALUES  
+VALUES
   ("Nobody knows!",
     (SELECT id FROM questions WHERE id = 1),
     (SELECT id FROM replies AS parent WHERE parent.id = 1),
@@ -81,4 +84,8 @@ INSERT INTO
   question_likes (question_id, user_id)
 VALUES
   ((SELECT id FROM questions WHERE id = 2),
-    (SELECT id FROM users WHERE id = 1));
+    (SELECT id FROM users WHERE id = 1)),
+  ((SELECT id FROM questions WHERE id = 1),
+    (SELECT id FROM users WHERE id = 2)),
+  ((SELECT id FROM questions WHERE id = 2),
+    (SELECT id FROM users WHERE id = 3));
